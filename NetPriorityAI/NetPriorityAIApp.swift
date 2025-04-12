@@ -13,7 +13,7 @@ struct NetPriorityAIApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LandingPage()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
