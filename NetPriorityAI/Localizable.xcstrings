@@ -1,7 +1,16 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
+    "About" : {
+
+    },
     "Add Item" : {
+
+    },
+    "Cancel" : {
 
     },
     "Create" : {
@@ -38,10 +47,34 @@
         }
       }
     },
+    "Current Company / School" : {
+
+    },
+    "First Name" : {
+
+    },
     "Item at %@" : {
 
     },
+    "Last Name" : {
+
+    },
+    "OK" : {
+
+    },
+    "Please share your professional background so we can provide more personalized responses to your needs. This helps us tailor our assistance to your specific industry and expertise." : {
+
+    },
+    "Profile Created" : {
+
+    },
     "Select an item" : {
+
+    },
+    "Tip" : {
+
+    },
+    "Your profile has been created successfully." : {
 
     }
   },

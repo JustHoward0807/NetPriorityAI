@@ -26,7 +26,7 @@ struct LandingPageView: View {
                 .padding(.horizontal, 80)
                 .padding(.bottom, 50)
             }.navigationDestination(isPresented: $navigateToContent) {
-                BoardingPageView()
+                BoardingPageView().navigationBarBackButtonHidden(true)
             }
             .background(.backgroundPrimary)
         }

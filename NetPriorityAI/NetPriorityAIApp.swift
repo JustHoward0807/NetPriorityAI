@@ -6,15 +6,18 @@
 //
 
 import SwiftUI
-
+import TipKit
 @main
 struct NetPriorityAIApp: App {
     let persistenceController = PersistenceController.shared
-
+    
     var body: some Scene {
         WindowGroup {
             LandingPageView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
+        
     }
+    
+    
 }
