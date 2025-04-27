@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		89BEA4BD2DAB69940085EADE /* User+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BEA4BC2DAB69940085EADE /* User+CoreDataProperties.swift */; };
+		89BEA4BE2DAB69940085EADE /* User+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89BEA4BB2DAB69940085EADE /* User+CoreDataClass.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		89BEA4642DAA21D30085EADE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -27,6 +32,8 @@
 		89BEA44D2DAA21D20085EADE /* NetPriorityAI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NetPriorityAI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		89BEA4632DAA21D30085EADE /* NetPriorityAITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NetPriorityAITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		89BEA46D2DAA21D30085EADE /* NetPriorityAIUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NetPriorityAIUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		89BEA4BB2DAB69940085EADE /* User+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "User+CoreDataClass.swift"; path = "NetPriorityAI/Models/User+CoreDataClass.swift"; sourceTree = "<group>"; };
+		89BEA4BC2DAB69940085EADE /* User+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "User+CoreDataProperties.swift"; path = "NetPriorityAI/Models/User+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -75,6 +82,8 @@
 		89BEA4442DAA21D20085EADE = {
 			isa = PBXGroup;
 			children = (
+				89BEA4BB2DAB69940085EADE /* User+CoreDataClass.swift */,
+				89BEA4BC2DAB69940085EADE /* User+CoreDataProperties.swift */,
 				89BEA44F2DAA21D20085EADE /* NetPriorityAI */,
 				89BEA4662DAA21D30085EADE /* NetPriorityAITests */,
 				89BEA4702DAA21D30085EADE /* NetPriorityAIUITests */,
@@ -237,6 +246,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89BEA4BD2DAB69940085EADE /* User+CoreDataProperties.swift in Sources */,
+				89BEA4BE2DAB69940085EADE /* User+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
