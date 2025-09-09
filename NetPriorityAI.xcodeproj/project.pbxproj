@@ -29,9 +29,30 @@
 		A1137C232E6FBE5400882A8E /* NetPriorityAIUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NetPriorityAIUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		A1137C3C2E6FC45900882A8E /* Exceptions for "NetPriorityAI" folder in "NetPriorityAITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Localizable.xcstrings,
+			);
+			target = A1137C182E6FBE5300882A8E /* NetPriorityAITests */;
+		};
+		A1137C3D2E6FC45900882A8E /* Exceptions for "NetPriorityAI" folder in "NetPriorityAIUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Localizable.xcstrings,
+			);
+			target = A1137C222E6FBE5400882A8E /* NetPriorityAIUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		A1137C0C2E6FBE5200882A8E /* NetPriorityAI */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				A1137C3C2E6FC45900882A8E /* Exceptions for "NetPriorityAI" folder in "NetPriorityAITests" target */,
+				A1137C3D2E6FC45900882A8E /* Exceptions for "NetPriorityAI" folder in "NetPriorityAIUITests" target */,
+			);
 			path = NetPriorityAI;
 			sourceTree = "<group>";
 		};
@@ -329,6 +350,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -386,6 +408,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
