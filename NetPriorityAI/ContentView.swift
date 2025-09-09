@@ -1,61 +1,74 @@
-//
-//  ContentView.swift
-//  NetPriorityAI
-//
-//  Created by Howard Private on 9/8/25.
-//
-
 import SwiftUI
-import SwiftData
 
 struct ContentView: View {
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
+    @State private var showScanner = false
+    @State private var frontImage: UIImage?
+    @State private var backImage: UIImage?
+    @State private var alertMessage: String?
 
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+        NavigationView {
+            VStack(spacing: 16) {
+                if let frontImage = frontImage, let backImage = backImage {
+                    VStack {
+                        Text("Front")
+                        Image(uiImage: frontImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxHeight: 150)
+                        Text("Back")
+                        Image(uiImage: backImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxHeight: 150)
                     }
+                } else {
+                    Text("No business card scanned yet")
+                        .foregroundStyle(.secondary)
                 }
-                .onDelete(perform: deleteItems)
+
+                Button("Scan Business Card") {
+                    showScanner = true
+                }
+                .padding()
             }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
+            .navigationTitle("Business Card Scanner")
+        }
+        .sheet(isPresented: $showScanner) {
+            ScannerView { result in
+                switch result {
+                case .success(let images):
+                    frontImage = images.front
+                    backImage = images.back
+                case .failure(let error):
+                    alertMessage = message(for: error)
                 }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
-                    }
-                }
+                showScanner = false
             }
-        } detail: {
-            Text("Select an item")
+        }
+        .alert(item: $alertMessage) { message in
+            Alert(title: Text("Scanner Error"), message: Text(message), dismissButton: .default(Text("OK")))
         }
     }
 
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
-            }
+    private func message(for error: ScannerCoordinator.ScannerError) -> String {
+        switch error {
+        case .unavailable:
+            return "VisionKit scanner is not available on this device."
+        case .cancelled:
+            return "Scanning was cancelled."
+        case .failed:
+            return "Failed to capture image."
+        case .underlying(let err):
+            return err.localizedDescription
         }
     }
 }
 
+extension String: Identifiable {
+    public var id: String { self }
+}
+
 #Preview {
     ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
 }
