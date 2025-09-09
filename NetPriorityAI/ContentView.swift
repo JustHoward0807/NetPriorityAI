@@ -33,6 +33,17 @@ struct ContentView: View {
                         Label("Add Item", systemImage: "plus")
                     }
                 }
+                ToolbarItem {
+                    BusinessCardScannerButton { result in
+                        switch result {
+                        case .success(let images):
+                            // Handle scanned images (front and back)
+                            print("Scanned front: \(images.front.size) back: \(images.back.size)")
+                        case .failure(let error):
+                            print("Scan failed: \(error)")
+                        }
+                    }
+                }
             }
         } detail: {
             Text("Select an item")
