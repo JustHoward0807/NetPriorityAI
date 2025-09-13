@@ -9,6 +9,25 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
+    var body: some View {
+        TabView {
+            HomeView()
+                .tabItem {
+                    Label("Home", systemImage: "house")
+                }
+            AllCardsView()
+                .tabItem {
+                    Label("All cards", systemImage: "square.stack")
+                }
+            SettingsView()
+                .tabItem {
+                    Label("Settings", systemImage: "gear")
+                }
+        }
+    }
+}
+
+struct HomeView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
 
@@ -52,6 +71,18 @@ struct ContentView: View {
                 modelContext.delete(items[index])
             }
         }
+    }
+}
+
+struct AllCardsView: View {
+    var body: some View {
+        Text("All cards")
+    }
+}
+
+struct SettingsView: View {
+    var body: some View {
+        Text("Settings")
     }
 }
 
