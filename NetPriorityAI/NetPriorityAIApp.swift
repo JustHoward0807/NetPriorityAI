@@ -2,7 +2,7 @@
 //  NetPriorityAIApp.swift
 //  NetPriorityAI
 //
-//  Created by Howard Private on 9/8/25.
+//  Created by Lung Hao Tung on 9/8/25.
 //
 
 import SwiftUI
@@ -25,7 +25,7 @@ struct NetPriorityAIApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
         }
         .modelContainer(sharedModelContainer)
     }
