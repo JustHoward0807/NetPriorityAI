@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftData
+import SwiftUI
 
 @MainActor
 class HomeViewModel: ObservableObject {
