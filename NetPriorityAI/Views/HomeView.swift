@@ -1,16 +1,17 @@
 //
-//  ContentView.swift
+//  HomeView.swift
 //  NetPriorityAI
 //
-//  Created by Lung Hao Tung on 9/8/25.
+//  Created by Lung Hao Tung on 9/13/25.
 //
 
 import SwiftUI
 import SwiftData
 
-struct ContentView: View {
+struct HomeView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
+    @StateObject private var viewModel = HomeViewModel()
 
     var body: some View {
         NavigationSplitView {
@@ -22,40 +23,25 @@ struct ContentView: View {
                         Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
                     }
                 }
-                .onDelete(perform: deleteItems)
+                .onDelete { offsets in
+                    viewModel.deleteItems(items: items, offsets: offsets)
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
                 }
                 ToolbarItem {
-                    Button(action: addItem) {
+                    Button(action: viewModel.addItem) {
                         Label("Add Item", systemImage: "plus")
                     }
                 }
+            }
+            .onAppear {
+                viewModel.modelContext = modelContext
             }
         } detail: {
             Text("Select an item")
         }
     }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
-            }
-        }
-    }
-}
-
-#Preview {
-    ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
 }
