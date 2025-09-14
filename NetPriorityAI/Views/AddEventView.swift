@@ -1,22 +1,39 @@
-import SwiftUI
+import MapKit
 import PhotosUI
+import SwiftUI
+import TipKit
 
 struct AddEventView: View {
     @Environment(\.dismiss) private var dismiss
+    @StateObject private var viewModel = AddEventViewModel()
     @State private var eventName = ""
     @State private var eventLocation = ""
     @State private var eventGoal = ""
     @State private var eventDescription = ""
-
     @State private var selectedPhoto: PhotosPickerItem? = nil
     @State private var selectedImageData: Data? = nil
 
+    //TODO: Map feature
+    //    private let myHome = CLLocationCoordinate2D(
+    //        latitude: 40.7493963,
+    //        longitude: -111.899047
+    //    )
+
     var body: some View {
-        NavigationView {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 16) {
+        let goalTip = GeneralPopOverTip(
+            title: Text("Purpose"),
+            message: Text(
+                "Giving goal for this event helps AI better analyze result."
+            ),
+        )
+
+        NavigationStack {
+            Form {
+                Section {
                     PhotosPicker(selection: $selectedPhoto, matching: .images) {
-                        if let data = selectedImageData, let uiImage = UIImage(data: data) {
+                        if let data = selectedImageData,
+                            let uiImage = UIImage(data: data)
+                        {
                             Image(uiImage: uiImage)
                                 .resizable()
                                 .scaledToFill()
@@ -34,43 +51,101 @@ struct AddEventView: View {
                             }
                         }
                     }
-                    .onChange(of: selectedPhoto) { newValue in
+                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(EdgeInsets())
+                    .onChange(of: selectedPhoto, initial: false) {
+                        oldValue,
+                        newValue in
                         if let newValue {
                             Task {
-                                if let data = try? await newValue.loadTransferable(type: Data.self) {
+                                if let data =
+                                    try? await newValue.loadTransferable(
+                                        type: Data.self
+                                    )
+                                {
                                     selectedImageData = data
                                 }
                             }
                         }
                     }
-
-                    Group {
-                        TextField("Event Name", text: $eventName)
-                            .textFieldStyle(.roundedBorder)
-                        TextField("Event Location", text: $eventLocation)
-                            .textFieldStyle(.roundedBorder)
-                        TextField("Event Goal", text: $eventGoal)
-                            .textFieldStyle(.roundedBorder)
-                        TextField("Description", text: $eventDescription)
-                            .textFieldStyle(.roundedBorder)
-                    }
-                    .padding(.horizontal)
                 }
+
+                Section {
+                    TextField("Event Name", text: $eventName)
+                    TextField("Location", text: $eventLocation)
+                    TextField(
+                        "What's ur goal for this event?",
+                        text: $eventGoal
+                    )
+                    .padding(.trailing, 28)
+                    .overlay(alignment: .trailing) {
+                        Button(
+                            action: {
+                                GeneralPopOverTip.buttonPressed = true
+                            }) {
+                                Image(systemName: "lightbulb")
+                                    .imageScale(.medium)
+                                    .foregroundStyle(.secondary)
+                            }
+                            .buttonStyle(.plain)
+                            .popoverTip(goalTip, arrowEdge: .top)
+
+                    }
+                    TextField(
+                        "Description",
+                        text: $eventDescription,
+                        axis: .vertical
+                    )
+                    .lineLimit(5...8)
+                }
+
+                //                Section {
+                //                    Map {
+                //                        Annotation(
+                //                            "San Francisco City Hall",
+                //                            coordinate: myHome
+                //                        ) {
+                //                            ZStack {
+                //                                RoundedRectangle(cornerRadius: 5)
+                //                                    .fill(Color.yellow)
+                //                                Text("🛝")
+                //                                    .padding(5)
+                //                            }
+                //                        }
+                //
+                //                    }
+                //
+                //                    .frame(height: 200)
+                //                    .frame(maxWidth: .infinity)
+                //                    .listRowBackground(Color.clear)
+                //                    .listRowInsets(EdgeInsets())
+                //                }
             }
             .navigationTitle("New Event")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") { dismiss() }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Add") { dismiss() }
+                    Button("Add") {
+                        // Navigate to next screen
+                        dismiss()
+                    }
                 }
             }
         }
+
         .ignoresSafeArea()
+        .onDisappear {
+            GeneralPopOverTip.buttonPressed = false
+        }
+
     }
+
 }
 
-#Preview {
-    AddEventView()
-}
+//#Preview {
+//    AddEventView()
+//}

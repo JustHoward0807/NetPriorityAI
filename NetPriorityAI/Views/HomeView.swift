@@ -28,6 +28,7 @@ struct HomeView: View {
                     viewModel.deleteItems(items: items, offsets: offsets)
                 }
             }
+            
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
@@ -38,16 +39,24 @@ struct HomeView: View {
                     } label: {
                         Label("Add Item", systemImage: "plus")
                     }
+                    .sheet(isPresented: $showingAddEvent) {
+                        AddEventView()
+                    }
                 }
             }
+            .navigationTitle("Events")
             .onAppear {
                 viewModel.modelContext = modelContext
             }
         } detail: {
             Text("Select an item")
         }
-        .fullScreenCover(isPresented: $showingAddEvent) {
-            AddEventView()
-        }
+
+        
     }
+}
+
+
+#Preview {
+    HomeView()
 }
