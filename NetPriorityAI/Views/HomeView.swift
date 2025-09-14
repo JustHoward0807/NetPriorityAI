@@ -12,6 +12,7 @@ struct HomeView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
     @StateObject private var viewModel = HomeViewModel()
+    @State private var showingAddEvent = false
 
     var body: some View {
         NavigationSplitView {
@@ -32,7 +33,9 @@ struct HomeView: View {
                     EditButton()
                 }
                 ToolbarItem {
-                    Button(action: viewModel.addItem) {
+                    Button {
+                        showingAddEvent = true
+                    } label: {
                         Label("Add Item", systemImage: "plus")
                     }
                 }
@@ -42,6 +45,9 @@ struct HomeView: View {
             }
         } detail: {
             Text("Select an item")
+        }
+        .fullScreenCover(isPresented: $showingAddEvent) {
+            AddEventView()
         }
     }
 }
