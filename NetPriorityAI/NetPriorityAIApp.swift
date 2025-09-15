@@ -13,7 +13,8 @@ import TipKit
 struct NetPriorityAIApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self
+            Item.self,
+            Event.self
         ])
         let modelConfiguration = ModelConfiguration(
             schema: schema,

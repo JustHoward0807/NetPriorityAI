@@ -29,10 +29,9 @@ struct HomeView: View {
                 }
             }
             
+            
+            .navigationTitle("Events")
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
                 ToolbarItem {
                     Button {
                         showingAddEvent = true
@@ -44,7 +43,6 @@ struct HomeView: View {
                     }
                 }
             }
-            .navigationTitle("Events")
             .onAppear {
                 viewModel.modelContext = modelContext
             }

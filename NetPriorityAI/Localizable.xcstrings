@@ -1,13 +1,61 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Add" : {
+
+    },
     "Add Item" : {
+
+    },
+    "All cards" : {
+
+    },
+    "All Cards" : {
+
+    },
+    "Cancel" : {
+
+    },
+    "Close" : {
+
+    },
+    "Description" : {
+
+    },
+    "Event Details" : {
+
+    },
+    "Event Name" : {
+
+    },
+    "Events" : {
+
+    },
+    "Giving goal for this event helps AI better analyze result." : {
+
+    },
+    "Home" : {
 
     },
     "Item at %@" : {
 
     },
+    "Location" : {
+
+    },
+    "New Event" : {
+
+    },
+    "Purpose" : {
+
+    },
     "Select an item" : {
+
+    },
+    "Settings" : {
+
+    },
+    "What's ur goal for this event?" : {
 
     }
   },

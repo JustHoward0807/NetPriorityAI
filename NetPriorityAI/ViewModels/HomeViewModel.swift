@@ -12,11 +12,7 @@ import SwiftUI
 @MainActor
 class HomeViewModel: ObservableObject {
     var modelContext: ModelContext?
-    
-    init() {
-        // Empty init - modelContext will be set from the view
-    }
-    
+
     func addItem() {
         guard let modelContext = modelContext else { return }
         withAnimation {
