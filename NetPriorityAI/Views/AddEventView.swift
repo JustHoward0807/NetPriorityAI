@@ -130,13 +130,19 @@ struct AddEventView: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Add") {
-                        // Navigate to next screen
+                        let event: Event = Event(
+                            eventName: eventName,
+                            eventLocation: eventLocation,
+                            goal: eventGoal,
+                            eventDescription: eventDescription
+                        )
+                        viewModel.AddEvent(event: event)
                         dismiss()
-                    }
+                    }.disabled(eventName.isEmpty)
                 }
+
             }
         }
-
         .ignoresSafeArea()
         .onDisappear {
             GeneralPopOverTip.buttonPressed = false
@@ -146,6 +152,6 @@ struct AddEventView: View {
 
 }
 
-//#Preview {
-//    AddEventView()
-//}
+#Preview {
+    AddEventView()
+}

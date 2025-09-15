@@ -18,9 +18,9 @@ extension GeneralPopOverTip {
     
     var rules: [Rule] {
         [
-            #Rule(Self.$buttonPressed) {
-                $0 == true
-            }
+//            #Rule(Self.$buttonPressed) {
+//                $0 == true
+//            }
         ]
     }
 }

@@ -14,6 +14,7 @@ class AddEventViewModel: ObservableObject {
     
     func AddEvent(event: Event) {
         guard let modelContext = modelContext else {return}
-        //TODO: Insert event into database
+        
+            //TODO: Insert event into database
     }
 }
