@@ -12,6 +12,7 @@ struct HomeView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var items: [Item]
     @StateObject private var viewModel = HomeViewModel()
+    @State private var showingAddEvent = false
 
     var body: some View {
         NavigationSplitView {
@@ -27,21 +28,35 @@ struct HomeView: View {
                     viewModel.deleteItems(items: items, offsets: offsets)
                 }
             }
+            
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
                 }
                 ToolbarItem {
-                    Button(action: viewModel.addItem) {
+                    Button {
+                        showingAddEvent = true
+                    } label: {
                         Label("Add Item", systemImage: "plus")
+                    }
+                    .sheet(isPresented: $showingAddEvent) {
+                        AddEventView()
                     }
                 }
             }
+            .navigationTitle("Events")
             .onAppear {
                 viewModel.modelContext = modelContext
             }
         } detail: {
             Text("Select an item")
         }
+
+        
     }
+}
+
+
+#Preview {
+    HomeView()
 }
