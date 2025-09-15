@@ -79,19 +79,20 @@ struct AddEventView: View {
                         text: $eventGoal
                     )
                     .padding(.trailing, 28)
-                    .overlay(alignment: .trailing) {
-                        Button(
-                            action: {
-                                GeneralPopOverTip.buttonPressed = true
-                            }) {
-                                Image(systemName: "lightbulb")
-                                    .imageScale(.medium)
-                                    .foregroundStyle(.secondary)
-                            }
-                            .buttonStyle(.plain)
-                            .popoverTip(goalTip, arrowEdge: .top)
+                    .popoverTip(goalTip, arrowEdge: .top)
+                    // .overlay(alignment: .trailing) {
+                    //     Button(
+                    //         action: {
+                    //             GeneralPopOverTip.buttonPressed = true
+                    //         }) {
+                    //             Image(systemName: "lightbulb")
+                    //                 .imageScale(.medium)
+                    //                 .foregroundStyle(.secondary)
+                    //         }
+                    //         .buttonStyle(.plain)
+                    //         .popoverTip(goalTip, arrowEdge: .top)
 
-                    }
+                    // }
                     TextField(
                         "Description",
                         text: $eventDescription,
@@ -144,9 +145,6 @@ struct AddEventView: View {
             }
         }
         .ignoresSafeArea()
-        .onDisappear {
-            GeneralPopOverTip.buttonPressed = false
-        }
 
     }
 
