@@ -12,9 +12,9 @@ import SwiftData
 class AddEventViewModel: ObservableObject {
     var modelContext: ModelContext?
     
-    func AddEvent(event: Event) {
-        guard let modelContext = modelContext else {return}
-        
-            //TODO: Insert event into database
+    func addEvent(event: Event) {
+        guard let modelContext = modelContext else { return }
+        modelContext.insert(event)
+        try? modelContext.save()
     }
 }

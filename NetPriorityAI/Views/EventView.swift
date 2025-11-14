@@ -6,21 +6,17 @@ struct EventView: View {
     
     var body: some View {
             ScrollView {
+                HStack {
+                    
+                }
                 VStack(alignment: .leading, spacing: 20) {
                     Text(eventDisplayText)
                         .font(.body)
                         .padding()
                 }
             }
-            .navigationTitle("Event Details")
+            .navigationTitle(event.eventName)
             .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Close") {
-                        dismiss()
-                    }
-                }
-            }
         
     }
     

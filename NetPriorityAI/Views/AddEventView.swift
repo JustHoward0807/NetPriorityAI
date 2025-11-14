@@ -4,6 +4,7 @@ import SwiftUI
 import TipKit
 
 struct AddEventView: View {
+    @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
     @StateObject private var viewModel = AddEventViewModel()
     @State private var eventName = ""
@@ -137,7 +138,7 @@ struct AddEventView: View {
                             goal: eventGoal,
                             eventDescription: eventDescription
                         )
-                        viewModel.AddEvent(event: event)
+                        viewModel.addEvent(event: event)
                         dismiss()
                     }.disabled(eventName.isEmpty)
                 }
@@ -145,8 +146,11 @@ struct AddEventView: View {
             }
         }
         .ignoresSafeArea()
-
+        .onAppear {
+            viewModel.modelContext = modelContext
+        }
     }
+        
 
 }
 
