@@ -13,6 +13,16 @@ struct AddEventView: View {
     @State private var eventDescription = ""
     @State private var selectedPhoto: PhotosPickerItem? = nil
     @State private var selectedImageData: Data? = nil
+    @State private var selectedIcon: String? = nil
+    private let eventSymbols: [String] = [
+        "calendar", "party.popper", "mappin.and.ellipse", "figure.run", "tshirt", "music.note", "book", "camera", "leaf", "gift", "sportscourt", "cart", "heart", "star", "briefcase"
+    ]
+    private let goalTip = GeneralPopOverTip(
+        title: Text("Purpose"),
+        message: Text(
+            "Giving goal for this event helps AI better analyze result."
+        )
+    )
 
     //TODO: Map feature
     //    private let myHome = CLLocationCoordinate2D(
@@ -21,59 +31,86 @@ struct AddEventView: View {
     //    )
 
     var body: some View {
-        let goalTip = GeneralPopOverTip(
-            title: Text("Purpose"),
-            message: Text(
-                "Giving goal for this event helps AI better analyze result."
-            ),
-        )
-
         NavigationStack {
             Form {
                 Section {
-                    PhotosPicker(selection: $selectedPhoto, matching: .images) {
-                        if let data = selectedImageData,
-                            let uiImage = UIImage(data: data)
-                        {
-                            Image(uiImage: uiImage)
-                                .resizable()
-                                .scaledToFill()
-                                .frame(height: 200)
-                                .frame(maxWidth: .infinity)
-                                .clipped()
+                    HStack(spacing: 8) {
+                        if let selectedIcon {
+                            Image(systemName: selectedIcon)
+                                .foregroundStyle(.secondary)
                         } else {
-                            ZStack {
-                                Rectangle()
-                                    .fill(Color.gray.opacity(0.3))
-                                    .frame(height: 200)
-                                Image(systemName: "photo")
-                                    .font(.largeTitle)
-                                    .foregroundColor(.gray)
-                            }
+                            Image(systemName: "app.dashed")
+                                .foregroundStyle(.tertiary)
                         }
-                    }
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                    .listRowBackground(Color.clear)
-                    .listRowInsets(EdgeInsets())
-                    .onChange(of: selectedPhoto, initial: false) {
-                        oldValue,
-                        newValue in
-                        if let newValue {
-                            Task {
-                                if let data =
-                                    try? await newValue.loadTransferable(
-                                        type: Data.self
-                                    )
-                                {
-                                    selectedImageData = data
+
+                        TextField("Event Name", text: $eventName)
+
+                        Menu {
+                            ForEach(eventSymbols, id: \.self) { symbol in
+                                Button(action: { selectedIcon = symbol }) {
+                                    Label(symbol.replacingOccurrences(of: ".", with: " "), systemImage: symbol)
                                 }
                             }
+
+                            if selectedIcon != nil {
+                                Divider()
+                                Button(role: .destructive) {
+                                    selectedIcon = nil
+                                } label: {
+                                    Label("Clear Icon", systemImage: "xmark.circle")
+                                }
+                            }
+                        } label: {
+                            Image(systemName: "square.grid.2x2")
+                                .imageScale(.medium)
+                                .foregroundStyle(.secondary)
                         }
+                        .buttonStyle(.plain)
                     }
+                    
+//                    PhotosPicker(selection: $selectedPhoto, matching: .images) {
+//                        if let data = selectedImageData,
+//                            let uiImage = UIImage(data: data)
+//                        {
+//                            Image(uiImage: uiImage)
+//                                .resizable()
+//                                .scaledToFill()
+//                                .frame(height: 200)
+//                                .frame(maxWidth: .infinity)
+//                                .clipped()
+//                        } else {
+//                            ZStack {
+//                                Rectangle()
+//                                    .fill(Color.gray.opacity(0.3))
+//                                    .frame(height: 200)
+//                                Image(systemName: "photo")
+//                                    .font(.largeTitle)
+//                                    .foregroundColor(.gray)
+//                            }
+//                        }
+//                    }
+//                    .clipShape(RoundedRectangle(cornerRadius: 12))
+//                    .listRowBackground(Color.clear)
+//                    .listRowInsets(EdgeInsets())
+//                    .onChange(of: selectedPhoto, initial: false) {
+//                        oldValue,
+//                        newValue in
+//                        if let newValue {
+//                            Task {
+//                                if let data =
+//                                    try? await newValue.loadTransferable(
+//                                        type: Data.self
+//                                    )
+//                                {
+//                                    selectedImageData = data
+//                                }
+//                            }
+//                        }
+//                    }
                 }
 
                 Section {
-                    TextField("Event Name", text: $eventName)
+                    
                     TextField("Location", text: $eventLocation)
                     TextField(
                         "What's ur goal for this event?",
@@ -136,7 +173,8 @@ struct AddEventView: View {
                             eventName: eventName,
                             eventLocation: eventLocation,
                             goal: eventGoal,
-                            eventDescription: eventDescription
+                            eventDescription: eventDescription,
+                            iconSymbol: selectedIcon
                         )
                         viewModel.addEvent(event: event)
                         dismiss()
@@ -157,3 +195,4 @@ struct AddEventView: View {
 #Preview {
     AddEventView()
 }
+

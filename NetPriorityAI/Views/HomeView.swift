@@ -20,7 +20,6 @@ struct HomeView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack(alignment: .bottomTrailing) {
                 ScrollView {
                     //TODO: Need real data
                     AllCardsViewButton(title: "All Cards", action: {}, count: 10).padding(.all)
@@ -34,11 +33,17 @@ struct HomeView: View {
                                 EventView(event: item)
                             } label: {
                                 VStack(alignment: .leading, spacing: 8) {
-                                    Text(item.eventName)
-                                        .font(.headline)
-                                        .foregroundStyle(.primary)
-                                        .lineLimit(2)
-                                        .multilineTextAlignment(.leading)
+                                    HStack(spacing: 8) {
+                                        if let icon = item.iconSymbol, !icon.isEmpty {
+                                            Image(systemName: icon)
+                                                .foregroundStyle(.secondary)
+                                        }
+                                        Text(item.eventName)
+                                            .font(.headline)
+                                            .foregroundStyle(.primary)
+                                            .lineLimit(2)
+                                            .multilineTextAlignment(.leading)
+                                    }
                                     if let goal = item.goal, !goal.isEmpty {
                                         Text(goal)
                                             .font(.subheadline)
@@ -72,23 +77,29 @@ struct HomeView: View {
                     }
                     .padding(16)
                 }
-
-                Button(
-                    action: { showingAddEvent = true }
-                ) {
-                    Label("Add Event", systemImage: "plus", ).labelStyle(
-                        .iconOnly
-                    )
-                    .padding(10)
+                .toolbar {
+                    ToolbarSpacer(.flexible, placement: .bottomBar)
                     
+                    ToolbarItem(placement: .bottomBar) {
+                        Button(
+                            action: { showingAddEvent = true }
+                        ) {
+                            Label("Add Event", systemImage: "plus", ).labelStyle(
+                                .iconOnly
+                            )
+                            .padding(10)
+                            
+                        }
+                        .font(.title)
+                        .buttonStyle(.glassProminent)
+                        .sheet(isPresented: $showingAddEvent) {
+                            AddEventView()
+                        }
+                    }
                 }
-                .font(.title)
-                .buttonStyle(.glassProminent)
-                .padding(.trailing, 30)
-                .sheet(isPresented: $showingAddEvent) {
-                    AddEventView()
-                }
-            }
+
+
+            
 
             .navigationTitle("Events")
             .onAppear {
@@ -125,7 +136,8 @@ extension HomeView {
                 eventName: "Launch Party",
                 eventLocation: "NYC",
                 goal: nil,
-                eventDescription: "Ship it!"
+                eventDescription: "Ship it!",
+                iconSymbol: "figure.run"
             ),
         ]
         samples.forEach { context.insert($0) }

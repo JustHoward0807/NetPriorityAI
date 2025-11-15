@@ -14,6 +14,7 @@ final class Event {
     var eventLocation: String?
     var goal: String?
     var eventDescription: String?
+    var iconSymbol: String?
     // TODO: Image function for later
     // var image: Data?
 
@@ -21,11 +22,13 @@ final class Event {
         eventName: String,
         eventLocation: String?,
         goal: String?,
-        eventDescription: String?
+        eventDescription: String?,
+        iconSymbol: String? = nil
     ) {
         self.eventName = eventName
         self.eventLocation = eventLocation
         self.goal = goal
         self.eventDescription = eventDescription
+        self.iconSymbol = iconSymbol
     }
 }

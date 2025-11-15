@@ -11,7 +11,7 @@ struct AllCardsViewButton: View {
     let title: String
     let action: () -> Void
     let count: Int
-    
+
     @GestureState private var isPressed = false
 
     var body: some View {
